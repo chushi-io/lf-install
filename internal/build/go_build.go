@@ -23,9 +23,10 @@ var discardLogger = log.New(io.Discard, "", 0)
 type GoBuild struct {
 	Version         *version.Version
 	DetectVendoring bool
+	SourcePath      string
+	pathToRemove    string
 
-	pathToRemove string
-	logger       *log.Logger
+	logger *log.Logger
 }
 
 func (gb *GoBuild) SetLogger(logger *log.Logger) {
@@ -71,7 +72,13 @@ func (gb *GoBuild) Build(ctx context.Context, repoDir, targetDir, binaryName str
 		}
 	}
 
-	buildArgs := []string{"build", "-o", filepath.Join(targetDir, binaryName)}
+	buildArgs := []string{"build"}
+
+	if gb.SourcePath != "" {
+		buildArgs = append(buildArgs, gb.SourcePath)
+	}
+
+	buildArgs = append(buildArgs, "-o", filepath.Join(targetDir, binaryName))
 
 	if gb.DetectVendoring {
 		vendorDir := filepath.Join(repoDir, "vendor")

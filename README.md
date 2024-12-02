@@ -34,6 +34,13 @@ Each comes with different trade-offs described below.
   - **Cons:**
     - Only relies on a single version, expects _you_ to manage the installation
     - _Not recommended_ for any environment where product installation is not controlled or managed by you (e.g. default GitHub Actions image managed by GitHub)
+- `releases.{LatestVersion,ExactVersion}` - Downloads, verifies & installs any known product from `releases.hashicorp.com`
+  - **Pros:**
+    - Fast and reliable way of obtaining any pre-built version of any product
+    - Allows installation of enterprise versions
+  - **Cons:**
+    - Installation may consume some bandwidth, disk space and a little time
+    - Potentially less stable builds (see `checkpoint` below)
 - `checkpoint.LatestVersion` - Downloads, verifies & installs any known product available in HashiCorp Checkpoint
   - **Pros:**
     - Checkpoint typically contains only product versions considered stable
