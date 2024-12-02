@@ -8,8 +8,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/chushi-io/lf-install/version"
 	"github.com/hashicorp/go-retryablehttp"
-	"github.com/hashicorp/hc-install/version"
 )
 
 // NewHTTPClient provides a pre-configured http.Client
@@ -19,7 +19,7 @@ func NewHTTPClient(logger *log.Logger) *http.Client {
 	rc.Logger = logger
 	client := rc.StandardClient()
 	client.Transport = &userAgentRoundTripper{
-		userAgent: fmt.Sprintf("hc-install/%s", version.Version()),
+		userAgent: fmt.Sprintf("lf-install/%s", version.Version()),
 		inner:     client.Transport,
 	}
 	return client

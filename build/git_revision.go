@@ -12,11 +12,11 @@ import (
 	"path/filepath"
 	"time"
 
+	isrc "github.com/chushi-io/lf-install/internal/src"
+	"github.com/chushi-io/lf-install/internal/validators"
+	"github.com/chushi-io/lf-install/product"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
-	isrc "github.com/hashicorp/hc-install/internal/src"
-	"github.com/hashicorp/hc-install/internal/validators"
-	"github.com/hashicorp/hc-install/product"
 )
 
 var (
@@ -113,7 +113,7 @@ func (gr *GitRevision) Build(ctx context.Context) (string, error) {
 	}
 
 	repoDir, err := os.MkdirTemp("",
-		fmt.Sprintf("hc-install-build-%s", gr.Product.Name))
+		fmt.Sprintf("lf-install-build-%s", gr.Product.Name))
 	if err != nil {
 		return "", err
 	}
@@ -172,7 +172,7 @@ func (gr *GitRevision) Build(ctx context.Context) (string, error) {
 	installDir := gr.InstallDir
 	if installDir == "" {
 		tmpDir, err := os.MkdirTemp("",
-			fmt.Sprintf("hc-install-%s-%s", gr.Product.Name, head.Hash()))
+			fmt.Sprintf("lf-install-%s-%s", gr.Product.Name, head.Hash()))
 		if err != nil {
 			return "", err
 		}

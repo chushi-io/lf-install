@@ -9,10 +9,10 @@ import (
 	"log"
 	"path/filepath"
 
-	"github.com/hashicorp/hc-install/errors"
-	"github.com/hashicorp/hc-install/internal/src"
-	"github.com/hashicorp/hc-install/internal/validators"
-	"github.com/hashicorp/hc-install/product"
+	"github.com/chushi-io/lf-install/errors"
+	"github.com/chushi-io/lf-install/internal/src"
+	"github.com/chushi-io/lf-install/internal/validators"
+	"github.com/chushi-io/lf-install/product"
 )
 
 // AnyVersion finds an executable binary of any version

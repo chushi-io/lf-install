@@ -7,7 +7,7 @@ import (
 	"context"
 	"log"
 
-	isrc "github.com/hashicorp/hc-install/internal/src"
+	isrc "github.com/chushi-io/lf-install/internal/src"
 )
 
 // Source represents an installer, finder, or builder

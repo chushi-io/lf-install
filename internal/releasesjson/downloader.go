@@ -18,7 +18,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/hashicorp/hc-install/internal/httpclient"
+	"github.com/chushi-io/lf-install/internal/httpclient"
 )
 
 type Downloader struct {

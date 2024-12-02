@@ -15,7 +15,7 @@ import (
 	"strings"
 
 	"github.com/ProtonMail/go-crypto/openpgp"
-	"github.com/hashicorp/hc-install/internal/httpclient"
+	"github.com/chushi-io/lf-install/internal/httpclient"
 )
 
 type ChecksumDownloader struct {

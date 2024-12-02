@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/hashicorp/hc-install/product"
+	"github.com/chushi-io/lf-install/product"
 )
 
 func TestAnyVersionValidate(t *testing.T) {
@@ -25,7 +25,7 @@ func TestAnyVersionValidate(t *testing.T) {
 		"ExactBinPath-and-Product": {
 			av: AnyVersion{
 				ExactBinPath: "/test",
-				Product:      &product.Terraform,
+				Product:      &product.OpenTofu,
 			},
 			expectedErr: fmt.Errorf("use either ExactBinPath or Product + ExtraPaths, not both"),
 		},
@@ -50,14 +50,14 @@ func TestAnyVersionValidate(t *testing.T) {
 			av: AnyVersion{
 				Product: &product.Product{
 					BinaryName: func() string { return "invalid!" },
-					Name:       product.Terraform.Name,
+					Name:       product.OpenTofu.Name,
 				},
 			},
 			expectedErr: fmt.Errorf("invalid binary name: \"invalid!\""),
 		},
 		"Product-valid": {
 			av: AnyVersion{
-				Product: &product.Terraform,
+				Product: &product.OpenTofu,
 			},
 		},
 	}

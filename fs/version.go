@@ -10,11 +10,11 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/chushi-io/lf-install/errors"
+	"github.com/chushi-io/lf-install/internal/src"
+	"github.com/chushi-io/lf-install/internal/validators"
+	"github.com/chushi-io/lf-install/product"
 	"github.com/hashicorp/go-version"
-	"github.com/hashicorp/hc-install/errors"
-	"github.com/hashicorp/hc-install/internal/src"
-	"github.com/hashicorp/hc-install/internal/validators"
-	"github.com/hashicorp/hc-install/product"
 )
 
 // Version finds the first executable binary of the product name

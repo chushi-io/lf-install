@@ -11,10 +11,10 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/chushi-io/lf-install/internal/testutil"
+	"github.com/chushi-io/lf-install/product"
+	"github.com/chushi-io/lf-install/src"
 	"github.com/hashicorp/go-version"
-	"github.com/hashicorp/hc-install/internal/testutil"
-	"github.com/hashicorp/hc-install/product"
-	"github.com/hashicorp/hc-install/src"
 )
 
 var (
@@ -29,7 +29,7 @@ func TestLatestVersion(t *testing.T) {
 	testutil.EndToEndTest(t)
 
 	lv := &LatestVersion{
-		Product: product.Terraform,
+		Product: product.OpenTofu,
 	}
 	lv.SetLogger(testutil.TestLogger())
 
@@ -41,7 +41,7 @@ func TestLatestVersion(t *testing.T) {
 	}
 	t.Cleanup(func() { lv.Remove(ctx) })
 
-	v, err := product.Terraform.GetVersion(ctx, execPath)
+	v, err := product.OpenTofu.GetVersion(ctx, execPath)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -59,7 +59,7 @@ func TestLatestVersion(t *testing.T) {
 func TestLatestVersion_basic(t *testing.T) {
 	mockApiRoot := filepath.Join("testdata", "mock_api_tf_0_14_with_prereleases")
 	lv := &LatestVersion{
-		Product:          product.Terraform,
+		Product:          product.OpenTofu,
 		ArmoredPublicKey: getTestPubKey(t),
 		ApiBaseURL:       testutil.NewTestServer(t, mockApiRoot).URL,
 	}
@@ -73,7 +73,7 @@ func TestLatestVersion_basic(t *testing.T) {
 	}
 	t.Cleanup(func() { lv.Remove(ctx) })
 
-	v, err := product.Terraform.GetVersion(ctx, execPath)
+	v, err := product.OpenTofu.GetVersion(ctx, execPath)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -92,7 +92,7 @@ func TestLatestVersion_prereleases(t *testing.T) {
 	mockApiRoot := filepath.Join("testdata", "mock_api_tf_0_14_with_prereleases")
 
 	lv := &LatestVersion{
-		Product:            product.Terraform,
+		Product:            product.OpenTofu,
 		IncludePrereleases: true,
 		ArmoredPublicKey:   getTestPubKey(t),
 		ApiBaseURL:         testutil.NewTestServer(t, mockApiRoot).URL,
@@ -107,7 +107,7 @@ func TestLatestVersion_prereleases(t *testing.T) {
 	}
 	t.Cleanup(func() { lv.Remove(ctx) })
 
-	v, err := product.Terraform.GetVersion(ctx, execPath)
+	v, err := product.OpenTofu.GetVersion(ctx, execPath)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -127,7 +127,7 @@ func TestExactVersion(t *testing.T) {
 
 	versionToInstall := version.Must(version.NewVersion("1.8.2"))
 	ev := &ExactVersion{
-		Product: product.Terraform,
+		Product: product.OpenTofu,
 		Version: versionToInstall,
 	}
 	ev.SetLogger(testutil.TestLogger())
@@ -150,7 +150,7 @@ func TestExactVersion(t *testing.T) {
 
 	t.Logf("exec path of installed: %s", execPath)
 
-	v, err := product.Terraform.GetVersion(ctx, execPath)
+	v, err := product.OpenTofu.GetVersion(ctx, execPath)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -170,13 +170,13 @@ func BenchmarkExactVersion(b *testing.B) {
 	mockApiRoot := filepath.Join("testdata", "mock_api_tf_0_14_with_prereleases")
 
 	for i := 0; i < b.N; i++ {
-		installDir, err := os.MkdirTemp("", fmt.Sprintf("%s_%d", "terraform", i))
+		installDir, err := os.MkdirTemp("", fmt.Sprintf("%s_%d", "tofu", i))
 		if err != nil {
 			b.Fatal(err)
 		}
 
 		ev := &ExactVersion{
-			Product:          product.Terraform,
+			Product:          product.OpenTofu,
 			Version:          version.Must(version.NewVersion("0.14.11")),
 			ArmoredPublicKey: getTestPubKey(b),
 			ApiBaseURL:       testutil.NewTestServer(b, mockApiRoot).URL,

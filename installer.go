@@ -9,9 +9,9 @@ import (
 	"io"
 	"log"
 
+	"github.com/chushi-io/lf-install/errors"
+	"github.com/chushi-io/lf-install/src"
 	"github.com/hashicorp/go-multierror"
-	"github.com/hashicorp/hc-install/errors"
-	"github.com/hashicorp/hc-install/src"
 )
 
 type Installer struct {

@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/hashicorp/hc-install/version"
+	"github.com/chushi-io/lf-install/version"
 
 	"github.com/hashicorp/cli"
 	"github.com/hashicorp/logutils"
@@ -31,7 +31,7 @@ func main() {
 		},
 	}
 
-	c := cli.NewCLI("hc-install", version.Version().String())
+	c := cli.NewCLI("lf-install", version.Version().String())
 	c.Args = os.Args[1:]
 	c.Commands = map[string]cli.CommandFactory{
 		"install": func() (cli.Command, error) {

@@ -10,10 +10,10 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/chushi-io/lf-install/internal/testutil"
+	"github.com/chushi-io/lf-install/product"
+	"github.com/chushi-io/lf-install/src"
 	"github.com/hashicorp/go-version"
-	"github.com/hashicorp/hc-install/internal/testutil"
-	"github.com/hashicorp/hc-install/product"
-	"github.com/hashicorp/hc-install/src"
 )
 
 var (
@@ -26,7 +26,7 @@ func TestLatestVersion(t *testing.T) {
 	testutil.EndToEndTest(t)
 
 	lv := &LatestVersion{
-		Product: product.Terraform,
+		Product: product.OpenTofu,
 	}
 	lv.SetLogger(testutil.TestLogger())
 
@@ -46,7 +46,7 @@ func TestLatestVersion(t *testing.T) {
 		}
 	})
 
-	v, err := product.Terraform.GetVersion(ctx, execPath)
+	v, err := product.OpenTofu.GetVersion(ctx, execPath)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -77,7 +77,7 @@ func TestLatestVersionValidate(t *testing.T) {
 			lv: LatestVersion{
 				Product: product.Product{
 					BinaryName: func() string { return "invalid!" },
-					Name:       product.Terraform.Name,
+					Name:       product.OpenTofu.Name,
 				},
 			},
 			expectedErr: fmt.Errorf("invalid binary name: \"invalid!\""),
@@ -85,7 +85,7 @@ func TestLatestVersionValidate(t *testing.T) {
 		"Product-incorrect-name": {
 			lv: LatestVersion{
 				Product: product.Product{
-					BinaryName: product.Terraform.BinaryName,
+					BinaryName: product.OpenTofu.BinaryName,
 					Name:       "invalid!",
 				},
 			},
@@ -93,7 +93,7 @@ func TestLatestVersionValidate(t *testing.T) {
 		},
 		"Product-valid": {
 			lv: LatestVersion{
-				Product: product.Terraform,
+				Product: product.OpenTofu,
 			},
 		},
 	}

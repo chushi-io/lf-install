@@ -7,9 +7,9 @@ import (
 	"fmt"
 	"testing"
 
+	rjson "github.com/chushi-io/lf-install/internal/releasesjson"
+	"github.com/chushi-io/lf-install/product"
 	"github.com/hashicorp/go-version"
-	rjson "github.com/hashicorp/hc-install/internal/releasesjson"
-	"github.com/hashicorp/hc-install/product"
 )
 
 func TestLatestVersionValidate(t *testing.T) {
@@ -23,7 +23,7 @@ func TestLatestVersionValidate(t *testing.T) {
 			lv: LatestVersion{
 				Product: product.Product{
 					BinaryName: func() string { return "invalid!" },
-					Name:       product.Terraform.Name,
+					Name:       product.OpenTofu.Name,
 				},
 			},
 			expectedErr: fmt.Errorf("invalid binary name: \"invalid!\""),
@@ -31,7 +31,7 @@ func TestLatestVersionValidate(t *testing.T) {
 		"Product-incorrect-name": {
 			lv: LatestVersion{
 				Product: product.Product{
-					BinaryName: product.Terraform.BinaryName,
+					BinaryName: product.OpenTofu.BinaryName,
 					Name:       "invalid!",
 				},
 			},
@@ -39,12 +39,12 @@ func TestLatestVersionValidate(t *testing.T) {
 		},
 		"Product-valid": {
 			lv: LatestVersion{
-				Product: product.Terraform,
+				Product: product.OpenTofu,
 			},
 		},
 		"Enterprise-missing-license-dir": {
 			lv: LatestVersion{
-				Product:    product.Vault,
+				Product:    product.OpenBao,
 				Enterprise: &EnterpriseOptions{},
 			},
 			expectedErr: fmt.Errorf("LicenseDir must be provided when requesting enterprise versions"),
@@ -101,27 +101,27 @@ func TestLatestVersion_FindLatestMatchingVersion(t *testing.T) {
 	}{
 		"oss1": {
 			lv: LatestVersion{
-				Product: product.Vault,
+				Product: product.OpenBao,
 			},
 			expectedVersion: "1.15.2",
 		},
 		"oss2": {
 			lv: LatestVersion{
-				Product:     product.Vault,
+				Product:     product.OpenBao,
 				Constraints: version.MustConstraints(version.NewConstraint("~> 1.14.0")),
 			},
 			expectedVersion: "1.14.1",
 		},
 		"enterprise": {
 			lv: LatestVersion{
-				Product:    product.Vault,
+				Product:    product.OpenBao,
 				Enterprise: &EnterpriseOptions{},
 			},
 			expectedVersion: "1.14.1+ent",
 		},
 		"enterprise-fips1402": {
 			lv: LatestVersion{
-				Product: product.Vault,
+				Product: product.OpenBao,
 				Enterprise: &EnterpriseOptions{
 					Meta: "fips1402",
 				},

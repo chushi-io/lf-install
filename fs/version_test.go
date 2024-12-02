@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/chushi-io/lf-install/product"
 	"github.com/hashicorp/go-version"
-	"github.com/hashicorp/hc-install/product"
 )
 
 func TestVersionValidate(t *testing.T) {
@@ -29,7 +29,7 @@ func TestVersionValidate(t *testing.T) {
 		"Product-missing-get-version": {
 			v: Version{
 				Product: product.Product{
-					BinaryName: product.Terraform.BinaryName,
+					BinaryName: product.OpenTofu.BinaryName,
 				},
 				Constraints: version.MustConstraints(version.NewConstraint(">= 1.0")),
 			},
@@ -37,13 +37,13 @@ func TestVersionValidate(t *testing.T) {
 		},
 		"Product-missing-version-constraint": {
 			v: Version{
-				Product: product.Terraform,
+				Product: product.OpenTofu,
 			},
 			expectedErr: fmt.Errorf("undeclared version constraints"),
 		},
 		"Product-and-version-constraint": {
 			v: Version{
-				Product:     product.Terraform,
+				Product:     product.OpenTofu,
 				Constraints: version.MustConstraints(version.NewConstraint(">= 1.0")),
 			},
 		},

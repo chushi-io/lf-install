@@ -11,10 +11,10 @@ new test data without having to generate a new key.
 ## How to generate new mock Terraform builds?
 
 ```
-cd ./terraform
+cd ./tofu
 export VERSION=0.14.11
 gpg --import ../2FCA0A85.private.asc
 goreleaser release --snapshot --rm-dist
-mkdir -p ../mock_terraform_builds/${VERSION}
-mv ./dist/terraform_${VERSION}_* ../mock_terraform_builds/${VERSION}/
+mkdir -p ../mock_tofu_builds/${VERSION}
+mv ./dist/tofu_${VERSION}_* ../mock_tofu_builds/${VERSION}/
 ```

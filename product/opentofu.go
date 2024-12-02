@@ -11,21 +11,23 @@ import (
 	"runtime"
 	"strings"
 
+	"github.com/chushi-io/lf-install/internal/build"
 	"github.com/hashicorp/go-version"
-	"github.com/hashicorp/hc-install/internal/build"
 )
 
 var (
-	vaultVersionOutputRe = regexp.MustCompile(`Vault ` + simpleVersionRe)
+	simpleVersionRe = `v?(?P<version>[0-9]+(?:\.[0-9]+)*(?:-[A-Za-z0-9\.]+)?)`
+
+	tofuVersionOutputRe = regexp.MustCompile(`OpenTofu ` + simpleVersionRe)
 )
 
-var Vault = Product{
-	Name: "vault",
+var OpenTofu = Product{
+	Name: "tofu",
 	BinaryName: func() string {
 		if runtime.GOOS == "windows" {
-			return "vault.exe"
+			return "tofu.exe"
 		}
-		return "vault"
+		return "tofu"
 	},
 	GetVersion: func(ctx context.Context, path string) (*version.Version, error) {
 		cmd := exec.CommandContext(ctx, path, "version")
@@ -37,7 +39,7 @@ var Vault = Product{
 
 		stdout := strings.TrimSpace(string(out))
 
-		submatches := vaultVersionOutputRe.FindStringSubmatch(stdout)
+		submatches := tofuVersionOutputRe.FindStringSubmatch(stdout)
 		if len(submatches) != 2 {
 			return nil, fmt.Errorf("unexpected number of version matches %d for %s", len(submatches), stdout)
 		}
@@ -49,8 +51,8 @@ var Vault = Product{
 		return v, err
 	},
 	BuildInstructions: &BuildInstructions{
-		GitRepoURL:    "https://github.com/hashicorp/vault.git",
+		GitRepoURL:    "https://github.com/opentofu/opentofu.git",
 		PreCloneCheck: &build.GoIsInstalled{},
-		Build:         &build.GoBuild{},
+		Build:         &build.GoBuild{DetectVendoring: true},
 	},
 }

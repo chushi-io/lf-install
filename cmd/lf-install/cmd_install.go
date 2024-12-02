@@ -16,10 +16,10 @@ import (
 	"github.com/hashicorp/cli"
 	"github.com/hashicorp/go-version"
 
-	hci "github.com/hashicorp/hc-install"
-	"github.com/hashicorp/hc-install/product"
-	"github.com/hashicorp/hc-install/releases"
-	"github.com/hashicorp/hc-install/src"
+	hci "github.com/chushi-io/lf-install"
+	"github.com/chushi-io/lf-install/product"
+	"github.com/chushi-io/lf-install/releases"
+	"github.com/chushi-io/lf-install/src"
 )
 
 type InstallCommand struct {
@@ -29,14 +29,14 @@ type InstallCommand struct {
 func (c *InstallCommand) Name() string { return "install" }
 
 func (c *InstallCommand) Synopsis() string {
-	return "Install a HashiCorp product"
+	return "Install a Linux Foundation product"
 }
 
 func (c *InstallCommand) Help() string {
 	helpText := `
-Usage: hc-install install [options] -version <version> <product>
+Usage: lf-install install [options] -version <version> <product>
 
-  This command installs a HashiCorp product.
+  This command installs a linux Foundation product.
   Options:
     -version  [REQUIRED] Version of product to install.
     -path     Path to directory where the product will be installed.
@@ -111,7 +111,7 @@ Option flags must be provided before the positional argument`)
 }
 
 func (c *InstallCommand) install(project, tag, installDirPath string, logger *log.Logger) (string, error) {
-	msg := fmt.Sprintf("hc-install: will install %s@%s", project, tag)
+	msg := fmt.Sprintf("lf-install: will install %s@%s", project, tag)
 	c.Ui.Info(msg)
 
 	v, err := version.NewVersion(tag)

@@ -1,7 +1,7 @@
 # Copyright (c) HashiCorp, Inc.
 # SPDX-License-Identifier: MPL-2.0
 
-project_name: terraform
+project_name: tofu
 env:
   - CGO_ENABLED=0
 

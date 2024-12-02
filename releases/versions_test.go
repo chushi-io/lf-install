@@ -7,11 +7,11 @@ import (
 	"context"
 	"testing"
 
+	"github.com/chushi-io/lf-install/internal/testutil"
+	"github.com/chushi-io/lf-install/product"
+	"github.com/chushi-io/lf-install/src"
 	"github.com/google/go-cmp/cmp"
 	"github.com/hashicorp/go-version"
-	"github.com/hashicorp/hc-install/internal/testutil"
-	"github.com/hashicorp/hc-install/product"
-	"github.com/hashicorp/hc-install/src"
 )
 
 func TestVersions_List(t *testing.T) {
@@ -23,7 +23,7 @@ func TestVersions_List(t *testing.T) {
 	}
 
 	versions := &Versions{
-		Product:     product.Terraform,
+		Product:     product.OpenTofu,
 		Constraints: cons,
 	}
 
@@ -59,7 +59,7 @@ func TestVersions_List_enterprise(t *testing.T) {
 	}
 
 	versions := &Versions{
-		Product:     product.Vault,
+		Product:     product.OpenBao,
 		Constraints: cons,
 		Install: InstallationOptions{
 			LicenseDir: "/some/path",

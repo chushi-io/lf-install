@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/chushi-io/lf-install/product"
 	"github.com/hashicorp/go-version"
-	"github.com/hashicorp/hc-install/product"
 )
 
 func TestExactVersionValidate(t *testing.T) {
@@ -29,7 +29,7 @@ func TestExactVersionValidate(t *testing.T) {
 		"Product-missing-get-version": {
 			ev: ExactVersion{
 				Product: product.Product{
-					BinaryName: product.Terraform.BinaryName,
+					BinaryName: product.OpenTofu.BinaryName,
 				},
 				Version: version.Must(version.NewVersion("1.0.0")),
 			},
@@ -37,13 +37,13 @@ func TestExactVersionValidate(t *testing.T) {
 		},
 		"Product-and-Version": {
 			ev: ExactVersion{
-				Product: product.Terraform,
+				Product: product.OpenTofu,
 				Version: version.Must(version.NewVersion("1.0.0")),
 			},
 		},
 		"Version-missing": {
 			ev: ExactVersion{
-				Product: product.Terraform,
+				Product: product.OpenTofu,
 			},
 			expectedErr: fmt.Errorf("undeclared version"),
 		},

@@ -1,4 +1,4 @@
-module github.com/hashicorp/hc-install
+module github.com/chushi-io/lf-install
 
 go 1.22.0
 

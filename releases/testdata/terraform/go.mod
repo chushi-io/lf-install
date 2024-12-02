@@ -1,4 +1,4 @@
-module github.com/hashicorp/hc-install/releases/testdata/terraform
+module github.com/chushi-io/lf-install/releases/testdata/tofu
 
 go 1.18
 

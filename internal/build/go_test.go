@@ -3,7 +3,7 @@
 
 package build
 
-// import "github.com/hashicorp/hc-install/product"
+// import "github.com/chushi-io/lf-install/product"
 
 // var (
 // 	_ product.Checker = &GoIsInstalled{}

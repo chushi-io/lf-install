@@ -7,13 +7,13 @@ import (
 	"context"
 	"log"
 
+	install "github.com/chushi-io/lf-install"
+	"github.com/chushi-io/lf-install/build"
+	"github.com/chushi-io/lf-install/fs"
+	"github.com/chushi-io/lf-install/product"
+	"github.com/chushi-io/lf-install/releases"
+	"github.com/chushi-io/lf-install/src"
 	"github.com/hashicorp/go-version"
-	install "github.com/hashicorp/hc-install"
-	"github.com/hashicorp/hc-install/build"
-	"github.com/hashicorp/hc-install/fs"
-	"github.com/hashicorp/hc-install/product"
-	"github.com/hashicorp/hc-install/releases"
-	"github.com/hashicorp/hc-install/src"
 )
 
 // Installation of a single exact version
@@ -25,7 +25,7 @@ func ExampleInstaller() {
 
 	execPath, err := i.Install(ctx, []src.Installable{
 		&releases.ExactVersion{
-			Product: product.Terraform,
+			Product: product.OpenTofu,
 			Version: v1_3,
 		},
 	})
@@ -47,11 +47,11 @@ func ExampleInstaller_latestVersionConstrained() {
 
 	execPath, err := i.Ensure(context.Background(), []src.Source{
 		&fs.Version{
-			Product:     product.Terraform,
+			Product:     product.OpenTofu,
 			Constraints: v1,
 		},
 		&releases.LatestVersion{
-			Product:     product.Terraform,
+			Product:     product.OpenTofu,
 			Constraints: v1,
 		},
 	})
@@ -72,7 +72,7 @@ func ExampleInstaller_multipleVersions() {
 	v1_1 := version.Must(version.NewVersion("1.1.0"))
 	execPath, err := i.Install(context.Background(), []src.Installable{
 		&releases.ExactVersion{
-			Product: product.Terraform,
+			Product: product.OpenTofu,
 			Version: v1_1,
 		},
 	})
@@ -86,7 +86,7 @@ func ExampleInstaller_multipleVersions() {
 	v1_3 := version.Must(version.NewVersion("1.3.0"))
 	execPath, err = i.Install(context.Background(), []src.Installable{
 		&releases.ExactVersion{
-			Product: product.Terraform,
+			Product: product.OpenTofu,
 			Version: v1_3,
 		},
 	})
@@ -106,7 +106,7 @@ func ExampleInstaller_installAndBuildMultipleVersions() {
 
 	vc := version.MustConstraints(version.NewConstraint("~> 1.3"))
 	rv := &releases.Versions{
-		Product:     product.Terraform,
+		Product:     product.OpenTofu,
 		Constraints: vc,
 	}
 
@@ -115,7 +115,7 @@ func ExampleInstaller_installAndBuildMultipleVersions() {
 		log.Fatal(err)
 	}
 	versions = append(versions, &build.GitRevision{
-		Product: product.Terraform,
+		Product: product.OpenTofu,
 		Ref:     "HEAD",
 	})
 
@@ -142,7 +142,7 @@ func ExampleInstaller_enterpriseVersion() {
 
 	execPath, err := i.Install(ctx, []src.Installable{
 		&releases.ExactVersion{
-			Product:    product.Vault,
+			Product:    product.OpenBao,
 			Version:    v1_9,
 			LicenseDir: licenseDir,                    // required for enterprise versions
 			Enterprise: &releases.EnterpriseOptions{}, // specify that we want the enterprise version

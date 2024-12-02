@@ -10,13 +10,13 @@ import (
 	"runtime"
 	"testing"
 
+	install "github.com/chushi-io/lf-install"
+	"github.com/chushi-io/lf-install/fs"
+	"github.com/chushi-io/lf-install/internal/testutil"
+	"github.com/chushi-io/lf-install/product"
+	"github.com/chushi-io/lf-install/releases"
+	"github.com/chushi-io/lf-install/src"
 	"github.com/hashicorp/go-version"
-	install "github.com/hashicorp/hc-install"
-	"github.com/hashicorp/hc-install/fs"
-	"github.com/hashicorp/hc-install/internal/testutil"
-	"github.com/hashicorp/hc-install/product"
-	"github.com/hashicorp/hc-install/releases"
-	"github.com/hashicorp/hc-install/src"
 )
 
 func TestInstaller_Ensure_installable(t *testing.T) {
@@ -31,7 +31,7 @@ func TestInstaller_Ensure_installable(t *testing.T) {
 	ctx := context.Background()
 	_, err := i.Ensure(ctx, []src.Source{
 		&releases.LatestVersion{
-			Product: product.Terraform,
+			Product: product.OpenTofu,
 		},
 	})
 	if err != nil {
@@ -89,7 +89,7 @@ func TestInstaller_Install(t *testing.T) {
 	ctx := context.Background()
 	_, err := i.Install(ctx, []src.Installable{
 		&releases.LatestVersion{
-			Product: product.Terraform,
+			Product: product.OpenTofu,
 		},
 	})
 	if err != nil {
@@ -116,7 +116,7 @@ func TestInstaller_Install_enterprise(t *testing.T) {
 	ctx := context.Background()
 	_, err := i.Install(ctx, []src.Installable{
 		&releases.ExactVersion{
-			Product:    product.Vault,
+			Product:    product.OpenBao,
 			Version:    version.Must(version.NewVersion("1.9.8")),
 			InstallDir: tmpBinaryDir,
 			LicenseDir: tmpLicenseDir,

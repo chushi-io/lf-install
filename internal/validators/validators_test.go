@@ -11,7 +11,7 @@ func TestIsProductNameValid(t *testing.T) {
 		expectedValid bool
 	}{
 		{
-			"terraform",
+			"tofu",
 			true,
 		},
 		{
@@ -36,7 +36,7 @@ func TestIsBinaryNameValid(t *testing.T) {
 		expectedValid bool
 	}{
 		{
-			"terraform",
+			"tofu",
 			true,
 		},
 		{

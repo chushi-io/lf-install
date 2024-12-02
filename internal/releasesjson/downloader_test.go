@@ -14,21 +14,21 @@ func TestDetermineArchiveURL(t *testing.T) {
 	}{
 		{
 			name:       "with custom base URL + path",
-			archiveURL: "https://releases.hashicorp.com/terraform/1.8.2/terraform_1.8.2_darwin_amd64.zip",
+			archiveURL: "https://releases.hashicorp.com/tofu/1.8.2/tofu_1.8.2_darwin_amd64.zip",
 			baseURL:    "https://myartifactory.company.com/artifactory/hashicorp-remote",
-			want:       "https://myartifactory.company.com/artifactory/hashicorp-remote/terraform/1.8.2/terraform_1.8.2_darwin_amd64.zip",
+			want:       "https://myartifactory.company.com/artifactory/hashicorp-remote/tofu/1.8.2/tofu_1.8.2_darwin_amd64.zip",
 		},
 		{
 			name:       "with custom base URL + port + path",
-			archiveURL: "https://releases.hashicorp.com/terraform/1.8.2/terraform_1.8.2_darwin_amd64.zip",
+			archiveURL: "https://releases.hashicorp.com/tofu/1.8.2/tofu_1.8.2_darwin_amd64.zip",
 			baseURL:    "https://myartifactory.company.com:443/artifactory/hashicorp-remote",
-			want:       "https://myartifactory.company.com:443/artifactory/hashicorp-remote/terraform/1.8.2/terraform_1.8.2_darwin_amd64.zip",
+			want:       "https://myartifactory.company.com:443/artifactory/hashicorp-remote/tofu/1.8.2/tofu_1.8.2_darwin_amd64.zip",
 		},
 		{
 			name:       "without custom base URL",
-			archiveURL: "https://releases.hashicorp.com/terraform/1.8.2/terraform_1.8.2_darwin_amd64.zip",
+			archiveURL: "https://releases.hashicorp.com/tofu/1.8.2/tofu_1.8.2_darwin_amd64.zip",
 			baseURL:    "",
-			want:       "https://releases.hashicorp.com/terraform/1.8.2/terraform_1.8.2_darwin_amd64.zip",
+			want:       "https://releases.hashicorp.com/tofu/1.8.2/tofu_1.8.2_darwin_amd64.zip",
 		},
 	}
 

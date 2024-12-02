@@ -19,7 +19,7 @@ import (
 var version = "0.0.0"
 
 func main() {
-	c := cli.NewCLI("terraform", version)
+	c := cli.NewCLI("tofu", version)
 	c.HelpWriter = os.Stdout
 	c.Args = os.Args[1:]
 
@@ -47,10 +47,10 @@ func main() {
 }
 
 type VersionOutput struct {
-	Version            string            `json:"terraform_version"`
+	Version            string            `json:"tofu_version"`
 	Platform           string            `json:"platform"`
 	ProviderSelections map[string]string `json:"provider_selections"`
-	Outdated           bool              `json:"terraform_outdated"`
+	Outdated           bool              `json:"tofu_outdated"`
 }
 
 type VersionCommand struct {
@@ -105,7 +105,7 @@ func defaultFlagSet(name string) *flag.FlagSet {
 
 func (c *VersionCommand) Help() string {
 	helpText := `
-Usage: terraform version [-json]
+Usage: tofu version [-json]
 ` + c.Synopsis()
 
 	return strings.TrimSpace(helpText)

@@ -9,11 +9,11 @@ import (
 	"sort"
 	"time"
 
+	rjson "github.com/chushi-io/lf-install/internal/releasesjson"
+	"github.com/chushi-io/lf-install/internal/validators"
+	"github.com/chushi-io/lf-install/product"
+	"github.com/chushi-io/lf-install/src"
 	"github.com/hashicorp/go-version"
-	rjson "github.com/hashicorp/hc-install/internal/releasesjson"
-	"github.com/hashicorp/hc-install/internal/validators"
-	"github.com/hashicorp/hc-install/product"
-	"github.com/hashicorp/hc-install/src"
 )
 
 // Versions allows listing all versions of a product

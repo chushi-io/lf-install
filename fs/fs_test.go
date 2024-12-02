@@ -8,11 +8,11 @@ import (
 	"os"
 	"testing"
 
+	"github.com/chushi-io/lf-install/internal/testutil"
+	"github.com/chushi-io/lf-install/product"
+	"github.com/chushi-io/lf-install/releases"
+	"github.com/chushi-io/lf-install/src"
 	"github.com/hashicorp/go-version"
-	"github.com/hashicorp/hc-install/internal/testutil"
-	"github.com/hashicorp/hc-install/product"
-	"github.com/hashicorp/hc-install/releases"
-	"github.com/hashicorp/hc-install/src"
 )
 
 var (
@@ -35,7 +35,7 @@ func TestExactVersion(t *testing.T) {
 	t.Setenv("PATH", "")
 
 	ev := &ExactVersion{
-		Product: product.Terraform,
+		Product: product.OpenTofu,
 		Version: version.Must(version.NewVersion("0.14.0")),
 	}
 	ev.SetLogger(testutil.TestLogger())
@@ -53,7 +53,7 @@ func TestVersion(t *testing.T) {
 	p := t.TempDir()
 	t.Setenv("PATH", p)
 	ev := releases.ExactVersion{
-		Product:    product.Terraform,
+		Product:    product.OpenTofu,
 		Version:    version.Must(version.NewVersion("1.1.0")),
 		InstallDir: p,
 	}
@@ -66,7 +66,7 @@ func TestVersion(t *testing.T) {
 
 	// Version matches constraint
 	v := &Version{
-		Product:     product.Terraform,
+		Product:     product.OpenTofu,
 		Constraints: version.MustConstraints(version.NewConstraint(">= 1.1")),
 	}
 	v.SetLogger(testutil.TestLogger())

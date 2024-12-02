@@ -10,10 +10,10 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/chushi-io/lf-install/internal/testutil"
+	"github.com/chushi-io/lf-install/product"
+	"github.com/chushi-io/lf-install/src"
 	"github.com/hashicorp/go-version"
-	"github.com/hashicorp/hc-install/internal/testutil"
-	"github.com/hashicorp/hc-install/product"
-	"github.com/hashicorp/hc-install/src"
 )
 
 var (
@@ -22,13 +22,13 @@ var (
 	_ src.LoggerSettable = &GitRevision{}
 )
 
-func TestGitRevision_terraform(t *testing.T) {
+func TestGitRevision_tofu(t *testing.T) {
 	testutil.EndToEndTest(t)
 
 	tempDir := t.TempDir()
 
 	gr := &GitRevision{
-		Product:    product.Terraform,
+		Product:    product.OpenTofu,
 		LicenseDir: tempDir,
 	}
 	gr.SetLogger(testutil.TestLogger())
@@ -49,7 +49,7 @@ func TestGitRevision_terraform(t *testing.T) {
 		}
 	})
 
-	v, err := product.Terraform.GetVersion(ctx, execPath)
+	v, err := product.OpenTofu.GetVersion(ctx, execPath)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -72,7 +72,7 @@ func TestGitRevision_terraform(t *testing.T) {
 func TestGitRevision_consul(t *testing.T) {
 	testutil.EndToEndTest(t)
 
-	gr := &GitRevision{Product: product.Consul}
+	gr := &GitRevision{Product: product.OpenTofu}
 	gr.SetLogger(testutil.TestLogger())
 
 	ctx := context.Background()
@@ -83,7 +83,7 @@ func TestGitRevision_consul(t *testing.T) {
 	}
 	t.Cleanup(func() { gr.Remove(ctx) })
 
-	v, err := product.Consul.GetVersion(ctx, execPath)
+	v, err := product.OpenTofu.GetVersion(ctx, execPath)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -101,7 +101,7 @@ func TestGitRevision_consul(t *testing.T) {
 func TestGitRevision_vault(t *testing.T) {
 	testutil.EndToEndTest(t)
 
-	gr := &GitRevision{Product: product.Vault}
+	gr := &GitRevision{Product: product.OpenBao}
 	gr.SetLogger(testutil.TestLogger())
 
 	ctx := context.Background()
@@ -112,7 +112,7 @@ func TestGitRevision_vault(t *testing.T) {
 	}
 	t.Cleanup(func() { gr.Remove(ctx) })
 
-	v, err := product.Vault.GetVersion(ctx, execPath)
+	v, err := product.OpenBao.GetVersion(ctx, execPath)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -138,7 +138,7 @@ func TestGitRevisionValidate(t *testing.T) {
 			gr: GitRevision{
 				Product: product.Product{
 					BinaryName: func() string { return "invalid!" },
-					Name:       product.Terraform.Name,
+					Name:       product.OpenTofu.Name,
 				},
 			},
 			expectedErr: fmt.Errorf("invalid binary name: \"invalid!\""),
@@ -146,7 +146,7 @@ func TestGitRevisionValidate(t *testing.T) {
 		"Product-incorrect-name": {
 			gr: GitRevision{
 				Product: product.Product{
-					BinaryName: product.Terraform.BinaryName,
+					BinaryName: product.OpenTofu.BinaryName,
 					Name:       "invalid!",
 				},
 			},
@@ -155,8 +155,8 @@ func TestGitRevisionValidate(t *testing.T) {
 		"Product-missing-build-instructions": {
 			gr: GitRevision{
 				Product: product.Product{
-					BinaryName: product.Terraform.BinaryName,
-					Name:       product.Terraform.Name,
+					BinaryName: product.OpenTofu.BinaryName,
+					Name:       product.OpenTofu.Name,
 				},
 			},
 			expectedErr: fmt.Errorf("no build instructions"),
@@ -164,11 +164,11 @@ func TestGitRevisionValidate(t *testing.T) {
 		"Product-missing-build-instructions-build": {
 			gr: GitRevision{
 				Product: product.Product{
-					BinaryName: product.Terraform.BinaryName,
+					BinaryName: product.OpenTofu.BinaryName,
 					BuildInstructions: &product.BuildInstructions{
-						GitRepoURL: product.Terraform.BuildInstructions.GitRepoURL,
+						GitRepoURL: product.OpenTofu.BuildInstructions.GitRepoURL,
 					},
-					Name: product.Terraform.Name,
+					Name: product.OpenTofu.Name,
 				},
 			},
 			expectedErr: fmt.Errorf("missing build instructions"),
@@ -176,18 +176,18 @@ func TestGitRevisionValidate(t *testing.T) {
 		"Product-missing-build-instructions-gitrepourl": {
 			gr: GitRevision{
 				Product: product.Product{
-					BinaryName: product.Terraform.BinaryName,
+					BinaryName: product.OpenTofu.BinaryName,
 					BuildInstructions: &product.BuildInstructions{
-						Build: product.Terraform.BuildInstructions.Build,
+						Build: product.OpenTofu.BuildInstructions.Build,
 					},
-					Name: product.Terraform.Name,
+					Name: product.OpenTofu.Name,
 				},
 			},
 			expectedErr: fmt.Errorf("missing repository URL"),
 		},
 		"Product-valid": {
 			gr: GitRevision{
-				Product: product.Terraform,
+				Product: product.OpenTofu,
 			},
 		},
 	}
