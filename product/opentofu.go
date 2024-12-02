@@ -53,6 +53,6 @@ var OpenTofu = Product{
 	BuildInstructions: &BuildInstructions{
 		GitRepoURL:    "https://github.com/opentofu/opentofu.git",
 		PreCloneCheck: &build.GoIsInstalled{},
-		Build:         &build.GoBuild{DetectVendoring: true, SourcePath: "cmd/tofu"},
+		Build:         &build.GoBuild{DetectVendoring: true, SourcePath: "cmd/tofu/*.go"},
 	},
 }
